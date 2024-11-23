@@ -1,0 +1,26 @@
+{
+    "jira_url": "https://gomigo.atlassian.net",
+    "user_id": {
+        "manjunath@scrut.io": "712020:df5b43ee-3f13-46ee-9c25-7f31887d2644",
+        "devops@scrut.io": "712020:3b1623e7-6039-4553-9a20-18579eb834ac",
+        "aishwarya@scrut.io": "63ff1b640e0ddcdce18c85d5",
+        "himal@scrut.io": "712020:8579c739-17d1-4b92-966a-2aaad93a41ec",
+        "avaneesh@scrut.io": "625adc499770e600716b945c"
+    },
+    "transition_id": {
+        "to_do": 11,
+        "in_progress": 21,
+        "done": 31
+    },
+    "status_id": {
+        "to_do": 10070,
+        "in_progress": 10071,
+        "done": 10072
+    },
+    "watcher": [
+        "manjunath@scrut.io",
+        "aishwarya@scrut.io",
+        "himal@scrut.io", 
+        "avaneesh@scrut.io"
+    ]
+}
