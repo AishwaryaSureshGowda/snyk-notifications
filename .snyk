@@ -1,0 +1,14 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+
+version: v1.25.0
+ignore:
+  snyk:lic:npm:ckeditor5:GPL-2.0:
+    - '*':
+        reason: Temporary license issue, investigating alternative packages or solutions,ref = https://gomigo.atlassian.net/browse/INFRA-228
+        expires: 2024-12-31
+
+  snyk:lic:npm:ckeditor:ckeditor5-react:GPL-2.0:
+    - '*':
+        reason: Temporary license issue, investigating alternative packages or solutions,ref = https://gomigo.atlassian.net/browse/INFRA-228
+        expires: 2024-12-31
+patch: {}
