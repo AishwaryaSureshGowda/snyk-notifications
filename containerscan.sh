@@ -102,7 +102,7 @@ sendSlackNotification() {
     local scanType="$1"
     local repoName="$2"
     local error="$3"
-    local snsTopic="arn:aws:sns:$region:378176467373:devops-snyk-scanner"
+    local snsTopic="arn:aws:sns:$region:123456789:devops-snyk-scanner"
 
     jsonContent=$(jq --null-input --arg message "$scanType - $repoName - $error" \
     '{
@@ -121,7 +121,7 @@ main() {
     local repoList=$(jq -r '.config[].repo | select(. != null)' $releaseJsonFile)
 
     echo '>>> Logging in to Amazon ECR'
-    aws ecr get-login-password --region $region | docker login --username AWS --password-stdin 378176467373.dkr.ecr.$region.amazonaws.com
+    aws ecr get-login-password --region $region | docker login --username AWS --password-stdin 123456789.dkr.ecr.$region.amazonaws.com
 
     for repo in ${repoList[@]}; do
         echo -e '\n>>> -------------------------------------------------------------------------------------------------\n'
@@ -135,7 +135,7 @@ main() {
     done
 
     echo '>>> Logging out from Amazon ECR'
-    docker logout 378176467373.dkr.ecr.$region.amazonaws.com
+    docker logout 123456789.dkr.ecr.$region.amazonaws.com
 }
 
 export PATH=$PATH:/usr/local/bin/node/bin
