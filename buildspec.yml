@@ -1,0 +1,43 @@
+version: 0.2
+
+env:
+  shell: bash
+  git-credential-helper: yes
+  secrets-manager:
+    jiraUser: devops-jira-user:username
+    jiraPass: devops-jira-user:password
+  parameter-store:
+    sshKey: id_rsa
+    sshPub: id_rsa.pub
+    SNYK_TOKEN: devops_snyk_token
+  variables:
+    s3BucketRegion: us-west-2
+    s3Bucket: scrut-snyk-report
+    s3JiraStoreFile: jira-store.txt
+    errorLogFile: error.log
+
+phases:
+  install:
+    commands:
+      - pwd && ls -l
+      - mkdir -p ~/.ssh
+      - echo $sshKey > ~/.ssh/id_rsa
+      - echo $sshPub > ~/.ssh/id_rsa.pub
+      - chmod 600 ~/.ssh/id_rsa
+      - cd snyk
+      - chmod +x *.sh
+      - ./install.sh
+  build:
+    commands:
+      - pwd && ls -l
+      - if [ "$SCAN_TYPE" == "APPLICATION" ]; then ./application_scan.sh; else ./container_scan.sh; fi
+  post_build:
+    commands:
+      - pwd && ls -l
+      - echo '>>> Pushing jira store and error file to s3 bucket'
+      - aws s3 cp $s3JiraStoreFile s3://$s3Bucket/ --region $s3BucketRegion
+      - if [ -f $errorLogFile ]; then aws s3 cp $errorLogFile s3://$s3Bucket/logs/ --region $s3BucketRegion; fi
+    finally:
+      - echo '>>> Cleaning up workspace'
+      - rm -rf ~/.ssh
+      - rm -rf $CODEBUILD_SRC_DIR/*
