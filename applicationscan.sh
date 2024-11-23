@@ -35,8 +35,8 @@ executeSnykScans() {
             snykProject=$nodeDepFile
             rm -rf $nodeDepDir
             echo '>>> Installing Node dependencies'
-            if [ $repoName != 'scrut-webapp-v2' ]; then
-                if [ $repoName == 'scrut-trustcenter-webapp-v2' ]; then
+            if [ $repoName != 'grc-webapp-v2' ]; then
+                if [ $repoName == 'grc-trustcenter-webapp-v2' ]; then
                     extraCmdArgs+=' --strict-out-of-sync=false'
                 fi
                 npmExitCode=$(timeout 5m npm install --no-audit --progress=false >> $workdDir/$errorLogFile 2>&1; echo $?)
@@ -163,7 +163,7 @@ sendSlackNotification() {
     local scanType="$1"
     local repoName="$2"
     local error="$3"
-    local snsTopic="arn:aws:sns:$region:378176467373:devops-snyk-scanner"
+    local snsTopic="arn:aws:sns:$region:123456789:devops-snyk-scanner"
 
     jsonContent=$(jq --null-input --arg message "$scanType - $repoName - $error" \
     '{
